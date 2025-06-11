@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>قائمة قصر نينوى المستقبلية</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+  <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;700&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --main-bg: #0c0e1a;
+      --card-bg: rgba(255, 255, 255, 0.04);
+      --highlight: #c9a856;
+      --text: #eeeeee;
+      --hover-glow: rgba(201, 168, 86, 0.2);
+      --blur: 16px;
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: 'Cairo', sans-serif;
+      transition: 0.3s ease all;
+    }
+
+    body {
+      background-color: var(--main-bg);
+      color: var(--text);
+      min-height: 100vh;
+      padding: 2rem;
+      position: relative;
+      overflow-x: hidden;
+      user-select: none;
+    }
+
+    body::before {
+      content: "";
+      position: fixed;
+      width: 400px;
+      height: 400px;
+      background: radial-gradient(circle, var(--hover-glow), transparent);
+      top: -100px;
+      left: -100px;
+      filter: blur(60px);
+      z-index: 0;
+    }
+
+    header {
+      font-size: 2.8rem;
+      font-weight: 500; /* أخف */
+      text-align: center;
+      margin-bottom: 3rem;
+      color: var(--highlight);
+      text-shadow: 0 0 4px rgba(201, 168, 86, 0.3); /* تقليل التوهج */
+      position: relative;
+      z-index: 2;
+      user-select: none;
+      letter-spacing: 0.05em;
+    }
+
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: 2.5rem;
+      max-width: 1200px;
+      margin: 0 auto;
+      position: relative;
+      z-index: 2;
+    }
+
+    .card {
+      background: var(--card-bg);
+      border-radius: 16px;
+      padding: 2rem 1.5rem;
+      text-align: center;
+      backdrop-filter: blur(var(--blur));
+      box-shadow: 0 0 15px rgba(0, 0, 0, 0.5);
+      border: 1px solid rgba(255, 255, 255, 0.06);
+      cursor: pointer;
+      position: relative;
+      overflow: hidden;
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+    .card:hover {
+      transform: translateY(-10px);
+      box-shadow: 0 0 25px var(--highlight);
+      border-color: var(--highlight);
+      z-index: 5;
+    }
+
+    .card i {
+      font-size: 3.2rem;
+      color: var(--highlight);
+      margin-bottom: 1.3rem;
+      text-shadow: 0 0 3px var(--highlight); /* تقليل التوهج */
+      transition: color 0.3s ease, text-shadow 0.3s ease;
+    }
+    .card:hover i {
+      color: #fff;
+      text-shadow: 0 0 8px #fff; /* تقليل التوهج عند التحويم */
+    }
+
+    .card h3 {
+      font-size: 1.7rem;
+      font-weight: 500; /* أخف */
+      color: var(--highlight);
+      letter-spacing: 0.03em;
+      margin-bottom: 0.2rem;
+      transition: color 0.3s ease;
+      text-shadow: 0 0 3px var(--highlight); /* تقليل التوهج */
+    }
+    .card:hover h3 {
+      color: #fff;
+      text-shadow: 0 0 8px #fff; /* تقليل التوهج عند التحويم */
+    }
+
+    @media (max-width: 640px) {
+      header {
+        font-size: 2rem;
+        margin-bottom: 2rem;
+      }
+      .card {
+        padding: 1.5rem 1rem;
+      }
+      .card i {
+        font-size: 2.6rem;
+      }
+      .card h3 {
+        font-size: 1.4rem;
+      }
+      .grid {
+        gap: 1.8rem;
+      }
+    }
+  </style>
+</head>
+<body>
+  <header>
+    منيو مطعم قصر نينوى
+  </header>
+
+  <div class="grid" id="menuGrid">
+    <div class="card" onclick="location.href='sandwich.html'" aria-label="الساندويتش">
+      <i class="fas fa-burger"></i>
+      <h3>الساندويتش</h3>
+    </div>    
+    <div class="card" onclick="location.href='grill.html'" aria-label="المشاوي">
+      <i class="fas fa-bacon"></i>
+      <h3>المشاوي</h3>
+    </div>
+    <div class="card" onclick="location.href='main-dishes.html'" aria-label="الأطباق الرئيسية">
+      <i class="fas fa-utensils"></i>
+      <h3>الأطباق الرئيسية</h3>
+    </div>
+    <div class="card" onclick="location.href='fried.html'" aria-label="القلية">
+      <i class="fas fa-bowl-food"></i>
+      <h3>القلية</h3>
+    </div>    
+    <div class="card" onclick="location.href='rice.html'" aria-label="التمن والمرق">
+      <i class="fas fa-bowl-rice"></i>
+      <h3>التمن والمرق</h3>
+    </div>    
+    <div class="card" onclick="location.href='chicken-meals.html'" aria-label="وجبات الدجاج">
+      <i class="fas fa-drumstick-bite"></i>
+      <h3>وجبات الدجاج</h3>
+    </div>
+    <div class="card" onclick="location.href='appetizers.html'" aria-label="المقبلات">
+      <i class="fas fa-shrimp"></i>
+      <h3>المقبلات</h3>
+    </div>    
+    <div class="card" onclick="location.href='drinks.html'" aria-label="المشروبات">
+      <i class="fas fa-cocktail"></i>
+      <h3>المشروبات</h3>
+    </div>
+  </div>  
+</body>
+</html>
