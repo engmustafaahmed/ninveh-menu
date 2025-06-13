@@ -32,6 +32,7 @@
       position: relative;
       overflow-x: hidden;
       user-select: none;
+      overflow-y: auto;
     }
 
     body::before {
@@ -48,43 +49,45 @@
 
     header {
       font-size: 2.8rem;
-      font-weight: 500; /* أخف */
+      font-weight: 500;
       text-align: center;
       margin-bottom: 3rem;
       color: var(--highlight);
-      text-shadow: 0 0 4px rgba(201, 168, 86, 0.3); /* تقليل التوهج */
+      text-shadow: 0 0 4px rgba(201, 168, 86, 0.3);
       position: relative;
       z-index: 2;
       user-select: none;
       letter-spacing: 0.05em;
     }
 
-    .grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
-      gap: 2.5rem;
-      max-width: 1200px;
-      margin: 0 auto;
-      position: relative;
-      z-index: 2;
+    .scroll-grid {
+      display: flex;
+      gap: 1.2rem;
+      overflow-x: auto;
+      padding-bottom: 1rem;
+      scroll-snap-type: x mandatory;
+    }
+
+    .scroll-grid::-webkit-scrollbar {
+      display: none;
     }
 
     .card {
+      flex: 0 0 160px;
       background: var(--card-bg);
       border-radius: 16px;
-      padding: 2rem 1.5rem;
+      padding: 1rem;
       text-align: center;
       backdrop-filter: blur(var(--blur));
       box-shadow: 0 0 15px rgba(0, 0, 0, 0.5);
       border: 1px solid rgba(255, 255, 255, 0.06);
       cursor: pointer;
-      position: relative;
-      overflow: hidden;
-      transition: transform 0.3s ease, box-shadow 0.3s ease;
+      scroll-snap-align: start;
       display: flex;
       flex-direction: column;
       align-items: center;
     }
+
     .card:hover {
       transform: translateY(-10px);
       box-shadow: 0 0 25px var(--highlight);
@@ -92,30 +95,75 @@
       z-index: 5;
     }
 
-    .card i {
-      font-size: 3.2rem;
-      color: var(--highlight);
-      margin-bottom: 1.3rem;
-      text-shadow: 0 0 3px var(--highlight); /* تقليل التوهج */
-      transition: color 0.3s ease, text-shadow 0.3s ease;
-    }
-    .card:hover i {
-      color: #fff;
-      text-shadow: 0 0 8px #fff; /* تقليل التوهج عند التحويم */
+    .card img {
+      width: 100%;
+      aspect-ratio: 1/1;
+      object-fit: cover;
+      border-radius: 10px;
+      border: none;
     }
 
     .card h3 {
-      font-size: 1.7rem;
-      font-weight: 500; /* أخف */
+      font-size: 1.2rem;
+      font-weight: 500;
       color: var(--highlight);
-      letter-spacing: 0.03em;
-      margin-bottom: 0.2rem;
-      transition: color 0.3s ease;
-      text-shadow: 0 0 3px var(--highlight); /* تقليل التوهج */
+      margin-top: 0.8rem;
+      text-shadow: 0 0 3px var(--highlight);
     }
-    .card:hover h3 {
-      color: #fff;
-      text-shadow: 0 0 8px #fff; /* تقليل التوهج عند التحويم */
+
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 2rem;
+      max-width: 1200px;
+      margin: 0 auto;
+      margin-top: 2rem;
+      position: relative;
+      z-index: 2;
+    }
+
+    .grid .card {
+      padding: 0.5rem;
+      border-radius: 20px;
+    }
+
+    .grid .card img {
+      width: 100%;
+      aspect-ratio: 1 / 1;
+      object-fit: cover;
+      border-radius: 16px;
+      border: none;
+      box-shadow: 0 0 12px rgba(0,0,0,0.3);
+    }
+
+    .grid .card h3 {
+      margin-top: 0.7rem;
+      font-size: 1.1rem;
+    }
+
+    .grid .card .line {
+      height: 1px;
+      width: 70%;
+      background-color: rgba(255, 255, 255, 0.08);
+      margin: 0.3rem auto 0.3rem auto;
+      border-radius: 2px;
+    }
+
+    .grid .card .price {
+      font-size: 1rem;
+      color: #ddd;
+      font-weight: 500;
+      text-shadow: 0 0 2px rgba(0,0,0,0.3);
+    }
+
+    .divider {
+      height: 2px;
+      width: 120px;
+      background-color: var(--highlight);
+      opacity: 0.5;
+      margin: 0 auto 0.6rem auto;
+      border-radius: 4px;
+      box-shadow: 0 0 6px var(--highlight);
     }
 
     @media (max-width: 640px) {
@@ -124,58 +172,478 @@
         margin-bottom: 2rem;
       }
       .card {
-        padding: 1.5rem 1rem;
-      }
-      .card i {
-        font-size: 2.6rem;
+        padding: 1rem;
       }
       .card h3 {
-        font-size: 1.4rem;
-      }
-      .grid {
-        gap: 1.8rem;
+        font-size: 1rem;
       }
     }
   </style>
 </head>
 <body>
-  <header>
-    منيو مطعم قصر نينوى
-  </header>
+  <header>منيو مطعم قصر نينوى</header>
 
-  <div class="grid" id="menuGrid">
-    <div class="card" onclick="location.href='sandwich.html'" aria-label="الساندويتش">
-      <i class="fas fa-burger"></i>
+  <!-- الأقسام -->
+  <div class="scroll-grid">
+    <div class="card" >
+      <img src="images/sandwich1.jpg" alt="الساندويتش" />
       <h3>الساندويتش</h3>
-    </div>    
-    <div class="card" onclick="location.href='grill.html'" aria-label="المشاوي">
-      <i class="fas fa-bacon"></i>
+    </div>
+    <div class="card" >
+      <img src="images/gril2.jpg" alt="المشاوي" />
       <h3>المشاوي</h3>
     </div>
-    <div class="card" onclick="location.href='main-dishes.html'" aria-label="الأطباق الرئيسية">
-      <i class="fas fa-utensils"></i>
+    <div class="card" >
+      <img src="images/main1.jpg" alt="الأطباق الرئيسية" />
       <h3>الأطباق الرئيسية</h3>
     </div>
-    <div class="card" onclick="location.href='fried.html'" aria-label="القلية">
-      <i class="fas fa-bowl-food"></i>
+    <div class="card" >
+      <img src="images/qalia1.jpg" alt="القلية" />
       <h3>القلية</h3>
-    </div>    
-    <div class="card" onclick="location.href='rice.html'" aria-label="التمن والمرق">
-      <i class="fas fa-bowl-rice"></i>
-      <h3>التمن والمرق</h3>
-    </div>    
-    <div class="card" onclick="location.href='chicken-meals.html'" aria-label="وجبات الدجاج">
-      <i class="fas fa-drumstick-bite"></i>
+    </div>
+    <div class="card" >
+      <img src="images/chiken1.jpg" alt="وجبات الدجاج" />
       <h3>وجبات الدجاج</h3>
     </div>
-    <div class="card" onclick="location.href='appetizers.html'" aria-label="المقبلات">
-      <i class="fas fa-shrimp"></i>
-      <h3>المقبلات</h3>
-    </div>    
-    <div class="card" onclick="location.href='drinks.html'" aria-label="المشروبات">
-      <i class="fas fa-cocktail"></i>
+    <div class="card" >
+      <img src="images/rice1.jpg" alt="التمن والمرق" />
+      <h3>التمن و المرق</h3>
+    </div>
+    <div class="card" >
+      <img src="images/mqbilat1.jpg" alt="مقبلات" />
+      <h3>مقبلات</h3>
+    </div>
+    <div class="card" >
+      <img src="images/drink1.jpg" alt="المشروبات" />
       <h3>المشروبات</h3>
     </div>
-  </div>  
+  </div>
+
+  <!-- فاصل -->
+  <div style="margin-top: 3rem; text-align: center;">
+    <div class="divider"></div>
+    <h2 style="
+      font-size: 1.8rem;
+      color: var(--highlight);
+      margin-bottom: 1rem;
+      text-shadow: 0 0 6px rgba(201, 168, 86, 0.2);
+      letter-spacing: 0.03em;
+    ">
+      ساندويتشات كص اللحم
+    </h2>
+  </div>
+
+  <!-- كروت كص اللحم -->
+  <div class="grid">
+    <div class="card">
+      <img src="images/sandwich1.jpg" alt="لفة كص لحم صمون حجري" />
+      <h3>لفة كص لحم صمون حجري</h3>
+      <div class="line"></div>
+      <div class="price">3000 د.ع</div>
+    </div>
+    <div class="card">
+      <img src="images/sandwich2.jpg"alt="لفة كص لحم صمون توماتيك" />
+      <h3>لفة كص لحم صمون توماتيك</h3>
+      <div class="line"></div>
+      <div class="price">3000 د.ع</div>
+    </div>
+    <div class="card">
+      <img src="images/sandwich1.jpg" alt="لفة صمون حجري دبل" />
+      <h3>لفة صمون حجري دبل</h3>
+      <div class="line"></div>
+      <div class="price">5000 د.ع</div>
+    </div>
+    <div class="card">
+      <img src="images/sandwich2.jpg" alt="لفة صمون توماتيك دبل" />
+      <h3>لفة صمون توماتيك دبل</h3>
+      <div class="line"></div>
+      <div class="price">5000 د.ع</div>
+    </div>
+    <div class="card">
+      <img src="images/sandwich1.jpg" alt="لفة صمون حجري سفري" />
+      <h3>لفة صمون حجري سفري</h3>
+      <div class="line"></div>
+      <div class="price">3000 د.ع</div>
+    </div>
+    <div class="card">
+      <img src="images/sandwich2.jpg" alt="لفة صمون توماتيك سفري" />
+      <h3>لفة صمون توماتيك سفري</h3>
+      <div class="line"></div>
+      <div class="price">3000 د.ع</div>
+    </div>
+  </div>
+
+  <!-- فاصل جديد لقسم المشاوي -->
+  <div style="margin-top: 4rem; text-align: center;">
+    <div class="divider"></div>
+    <h2 style="
+      font-size: 1.8rem;
+      color: var(--highlight);
+      margin-bottom: 1rem;
+      text-shadow: 0 0 6px rgba(201, 168, 86, 0.2);
+      letter-spacing: 0.03em;
+    ">
+      مشاوي قصر نينوى
+    </h2>
+  </div>
+
+  <!-- كروت المشاوي مع الأسماء والأسعار المحدثة -->
+  <div class="grid">
+    <div class="card">
+      <img src="images/gril1.jpg" alt="نفر كباب" />
+      <h3>نفر كباب</h3>
+      <div class="line"></div>
+      <div class="price">17,000 د.ع</div>
+    </div>
+    <div class="card">
+      <img src="images/gril2.jpg" alt="نفر تكة لحم" />
+      <h3>نفر تكة لحم</h3>
+      <div class="line"></div>
+      <div class="price">17,000 د.ع</div>
+    </div>
+    <div class="card">
+      <img src="images/gril3.jpg" alt="نفر معلاق" />
+      <h3>نفر معلاق</h3>
+      <div class="line"></div>
+      <div class="price">17,000 د.ع</div>
+    </div>
+    <div class="card">
+      <img src="images/gril4.jpg" alt="نفر تكة دجاج" />
+      <h3>نفر تكة دجاج</h3>
+      <div class="line"></div>
+      <div class="price">16,000 د.ع</div>
+    </div>
+    <div class="card">
+      <img src="images/gril5.jpg" alt="نفر مشكل" />
+      <h3>نفر مشكل</h3>
+      <div class="line"></div>
+      <div class="price">17,000 د.ع</div>
+    </div>
+    <div class="card">
+      <img src="images/gril6.jpg" alt="نفر كباب ساطور" />
+      <h3>نفر كباب ساطور</h3>
+      <div class="line"></div>
+      <div class="price">17,000 د.ع</div>
+    </div>
+    <div class="card">
+      <img src="images/gril7.jpg" alt="نص نفر كباب" />
+      <h3>نص نفر كباب</h3>
+      <div class="line"></div>
+      <div class="price">9,000 د.ع</div>
+    </div>
+    <div class="card">
+      <img src="images/gril8.jpg" alt="نص نفر تكة لحم" />
+      <h3>نص نفر تكة لحم</h3>
+      <div class="line"></div>
+      <div class="price">9,000 د.ع</div>
+    </div>
+    <div class="card">
+      <img src="images/gril9.jpg" alt="نص نفر معلاق" />
+      <h3>نص نفر معلاق</h3>
+      <div class="line"></div>
+      <div class="price">9,000 د.ع</div>
+    </div>
+    <div class="card">
+      <img src="images/gril10.jpg" alt="نص نفر تكة دجاج" />
+      <h3>نص نفر تكة دجاج</h3>
+      <div class="line"></div>
+      <div class="price">9,000 د.ع</div>
+    </div>
+    <div class="card">
+      <img src="images/gril11.jpg" alt="نص نفر مشكل" />
+      <h3>نص نفر مشكل</h3>
+      <div class="line"></div>
+      <div class="price">9,000 د.ع</div>
+    </div>
+    <div class="card">
+      <img src="images/gril6.jpg" alt="نص نفر كباب ساطور" />
+      <h3>نص نفر كباب ساطور</h3>
+      <div class="line"></div>
+      <div class="price">9,000 د.ع</div>
+    </div>
+  </div>
+    <!-- قسم الأطباق الرئيسية لقصر نينو -->
+    <div style="margin-top: 4rem; text-align: center;">
+      <div class="divider"></div>
+      <h2 style="
+        font-size: 1.8rem;
+        color: var(--highlight);
+        margin-bottom: 1rem;
+        text-shadow: 0 0 6px rgba(201, 168, 86, 0.2);
+        letter-spacing: 0.03em;
+      ">
+        الأطباق الرئيسية لقصر نينو
+      </h2>
+    </div>
+  
+    <div class="grid">
+      <div class="card">
+        <img src="images/main1.jpg" alt="نفر كص لحم على التمن" />
+        <h3>نفر كص لحم على التمن</h3>
+        <div class="line"></div>
+        <div class="price">18,000 د.ع</div>
+      </div>
+      <div class="card">
+        <img src="images/main2.jpg" alt="نفر كص ناشف" />
+        <h3>نفر كص ناشف</h3>
+        <div class="line"></div>
+        <div class="price">16,000 د.ع</div>
+      </div>
+      <div class="card">
+        <img src="images/main3.jpg" alt="نفر تشريب كص" />
+        <h3>نفر تشريب كص</h3>
+        <div class="line"></div>
+        <div class="price">15,000 د.ع</div>
+      </div>
+      <div class="card">
+        <img src="images/main4.jpg" alt="نفر تشريب كص على التمن" />
+        <h3>نفر تشريب كص على التمن</h3>
+        <div class="line"></div>
+        <div class="price">17,000 د.ع</div>
+      </div>
+      <div class="card">
+        <img src="images/main5.jpg" alt="قوزي" />
+        <h3>قوزي</h3>
+        <div class="line"></div>
+        <div class="price">20,000 د.ع</div>
+      </div>
+      <div class="card">
+        <img src="images/main6.jpg" alt="تشريب لحم مع تمن" />
+        <h3>تشريب لحم مع تمن</h3>
+        <div class="line"></div>
+        <div class="price">20,000 د.ع</div>
+      </div>
+      <div class="card">
+        <img src="images/main7.jpg" alt="نص نفر كص لحم على التمن" />
+        <h3>نص نفر كص لحم على التمن</h3>
+        <div class="line"></div>
+        <div class="price">14,000 د.ع</div>
+      </div>
+      <div class="card">
+        <img src="images/main2.jpg" alt="نص نفر كص ناشف" />
+        <h3>نص نفر كص ناشف</h3>
+        <div class="line"></div>
+        <div class="price">10,000 د.ع</div>
+      </div>
+      <div class="card">
+        <img src="images/main8.jpg" alt="نص نفر تشريب كص" />
+        <h3>نص نفر تشريب كص</h3>
+        <div class="line"></div>
+        <div class="price">11,000 د.ع</div>
+      </div>
+      <div class="card">
+        <img src="images/main9.jpg" alt="نص نفر تشريب كص على التمن" />
+        <h3>نص نفر تشريب كص على التمن</h3>
+        <div class="line"></div>
+        <div class="price">14,000 د.ع</div>
+      </div>
+    </div>
+  <!-- قسم قلية قصر نينوى -->
+<div style="margin-top: 4rem; text-align: center;">
+  <div class="divider"></div>
+  <h2 style="
+    font-size: 1.8rem;
+    color: var(--highlight);
+    margin-bottom: 1rem;
+    text-shadow: 0 0 6px rgba(201, 168, 86, 0.2);
+    letter-spacing: 0.03em;
+  ">
+    قلية قصر نينوى
+  </h2>
+</div>
+
+<div class="grid">
+  <div class="card">
+    <img src="images/qalia1.jpg" alt="نفر قلية ناشف" />
+    <h3>نفر قلية ناشف</h3>
+    <div class="line"></div>
+    <div class="price">15,000 د.ع</div>
+  </div>
+  <div class="card">
+    <img src="images/qalia2.jpg" alt="نفر قلية ناشف مع تمن" />
+    <h3>نفر قلية ناشف مع تمن</h3>
+    <div class="line"></div>
+    <div class="price">17,000 د.ع</div>
+  </div>
+  <div class="card">
+    <img src="images/qalia3.jpg" alt="نفر تشريب قلية" />
+    <h3>نفر تشريب قلية</h3>
+    <div class="line"></div>
+    <div class="price">15,000 د.ع</div>
+  </div>
+  <div class="card">
+    <img src="images/qalia4.jpg" alt="نفر تشريب قلية مع تمن" />
+    <h3>نفر تشريب قلية مع تمن</h3>
+    <div class="line"></div>
+    <div class="price">17,000 د.ع</div>
+  </div>
+  <div class="card">
+    <img src="images/qalia5.jpg" alt="نفر قلية عقراوية" />
+    <h3>نفر قلية عقراوية</h3>
+    <div class="line"></div>
+    <div class="price">15,000 د.ع</div>
+  </div>
+  <div class="card">
+    <img src="images/qalia6.jpg" alt="نص نفر قلية ناشف" />
+    <h3>نص نفر قلية ناشف</h3>
+    <div class="line"></div>
+    <div class="price">10,000 د.ع</div>
+  </div>
+  <div class="card">
+    <img src="images/qalia7.jpg" alt="نص نفر قلية ناشف مع تمن" />
+    <h3>نص نفر قلية ناشف مع تمن</h3>
+    <div class="line"></div>
+    <div class="price">14,000 د.ع</div>
+  </div>
+  <div class="card">
+    <img src="images/qalia8.jpg" alt="نص نفر تشريب قلية" />
+    <h3>نص نفر تشريب قلية</h3>
+    <div class="line"></div>
+    <div class="price">10,000 د.ع</div>
+  </div>
+  <div class="card">
+    <img src="images/qalia9.jpg" alt="نص نفر تشريب قلية مع تمن" />
+    <h3>نص نفر تشريب قلية مع تمن</h3>
+    <div class="line"></div>
+    <div class="price">14,000 د.ع</div>
+  </div>
+  <div class="card">
+    <img src="images/qalia5.jpg" alt="نص نفر قلية عقراوية" />
+    <h3>نص نفر قلية عقراوية</h3>
+    <div class="line"></div>
+    <div class="price">10,000 د.ع</div>
+  </div>
+</div>
+<!-- قسم وجبات دجاج قصر نينوى -->
+<div style="margin-top: 4rem; text-align: center;">
+  <div class="divider"></div>
+  <h2 style="
+    font-size: 1.8rem;
+    color: var(--highlight);
+    margin-bottom: 1rem;
+    text-shadow: 0 0 6px rgba(201, 168, 86, 0.2);
+    letter-spacing: 0.03em;
+  ">
+    وجبات دجاج قصر نينوى
+  </h2>
+</div>
+
+<div class="grid">
+  <div class="card">
+    <img src="images/chiken1.jpg" alt="نص دجاج مع رز" />
+    <h3>نص دجاج مع رز</h3>
+    <div class="line"></div>
+    <div class="price">12,000 د.ع</div>
+  </div>
+  <div class="card">
+    <img src="images/chiken2.jpg" alt="نص دجاج ناشف" />
+    <h3>نص دجاج ناشف</h3>
+    <div class="line"></div>
+    <div class="price">8,000 د.ع</div>
+  </div>
+</div>
+<!-- قسم تمن ومرق قصر نينوى -->
+<div style="margin-top: 4rem; text-align: center;">
+  <div class="divider"></div>
+  <h2 style="
+    font-size: 1.8rem;
+    color: var(--highlight);
+    margin-bottom: 1rem;
+    text-shadow: 0 0 6px rgba(201, 168, 86, 0.2);
+    letter-spacing: 0.03em;
+  ">
+    تمن ومرق قصر نينوى
+  </h2>
+</div>
+
+<div class="grid">
+  <div class="card">
+    <img src="images/rice1.jpg" alt="تمن ومرق" />
+    <h3>تمن ومرق</h3>
+    <div class="line"></div>
+    <div class="price">5,000 د.ع</div>
+  </div>
+  <div class="card">
+    <img src="images/rice2.jpg" alt="تمن" />
+    <h3>تمن</h3>
+    <div class="line"></div>
+    <div class="price">3,000 د.ع</div>
+  </div>
+  <div class="card">
+    <img src="images/rice3.jpg" alt="مرق" />
+    <h3>مرق</h3>
+    <div class="line"></div>
+    <div class="price">2,000 د.ع</div>
+  </div>
+</div>
+<!-- قسم مقبلات قصر نينوى -->
+<div style="margin-top: 4rem; text-align: center;">
+  <div class="divider"></div>
+  <h2 style="
+    font-size: 1.8rem;
+    color: var(--highlight);
+    margin-bottom: 1rem;
+    text-shadow: 0 0 6px rgba(201, 168, 86, 0.2);
+    letter-spacing: 0.03em;
+  ">
+    مقبلات قصر نينوى
+  </h2>
+</div>
+
+<div class="grid">
+  <div class="card">
+    <img src="images/mqbilat1.jpg" alt="مقبلات صغير" />
+    <h3>مقبلات صغير</h3>
+    <div class="line"></div>
+    <div class="price">2,000 د.ع</div>
+  </div>
+  <div class="card">
+    <img src="images/mqbilat2.jpg" alt="مقبلات وسط" />
+    <h3>مقبلات وسط</h3>
+    <div class="line"></div>
+    <div class="price">3,000 د.ع</div>
+  </div>
+  <div class="card">
+    <img src="images/mqbilat3.jpg" alt="مقبلات كبير" />
+    <h3>مقبلات كبير</h3>
+    <div class="line"></div>
+    <div class="price">4,000 د.ع</div>
+  </div>
+</div>
+<!-- قسم مشروبات قصر نينوى -->
+<div style="margin-top: 4rem; text-align: center;">
+  <div class="divider"></div>
+  <h2 style="
+    font-size: 1.8rem;
+    color: var(--highlight);
+    margin-bottom: 1rem;
+    text-shadow: 0 0 6px rgba(201, 168, 86, 0.2);
+    letter-spacing: 0.03em;
+  ">
+    مشروبات قصر نينوى
+  </h2>
+</div>
+
+<div class="grid">
+  <div class="card">
+    <img src="images/drink1.jpg" alt="كولا - فانتا - سبرايت" />
+    <h3>كولا - فانتا - سبرايت</h3>
+    <div class="line"></div>
+    <div class="price">500 د.ع</div>
+  </div>
+  <div class="card">
+    <img src="images/drink2.jpg" alt="لبن أربيل" />
+    <h3>لبن أربيل</h3>
+    <div class="line"></div>
+    <div class="price">1,000 د.ع</div>
+  </div>
+  <div class="card">
+    <img src="images/drink3.jpg" alt="ماء" />
+    <h3>ماء</h3>
+    <div class="line"></div>
+    <div class="price">250 د.ع</div>
+  </div>
+</div>
+
 </body>
 </html>
