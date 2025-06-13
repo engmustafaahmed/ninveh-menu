@@ -17,12 +17,14 @@
 
     body, html {
       height: 100%;
-      overflow: hidden;
+      /* علق overflow:hidden لتجنب مشاكل العرض على الموبايل */
+      /* overflow: hidden; */
     }
 
     .hero {
       position: relative;
       height: 100vh;
+      overflow: hidden; /* نحتفظ بالـ overflow هنا للحفاظ على الفيديو */
     }
 
     .hero video {
@@ -104,13 +106,13 @@
       bottom: 30px;
       left: 50%;
       transform: translateX(-50%);
-      z-index: 2;
+      z-index: 9999; /* تأكد انه فوق كل العناصر */
     }
 
     .lang-btn button {
       padding: 0.6rem 1.5rem;
       font-size: 1rem;
-      background-color: black;
+      background-color: rgba(0,0,0,0.7);
       color: white;
       border: none;
       border-radius: 10px;
