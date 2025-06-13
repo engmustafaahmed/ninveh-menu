@@ -171,23 +171,16 @@
     font-size: 2rem;
     margin-bottom: 2rem;
   }
-
-  .scroll-grid {
-    display: grid;
-    grid-template-columns: repeat(2, 1fr);
-    gap: 1rem;
-    overflow-x: unset;
-    padding-bottom: 0;
-  }
-
   .card {
-    flex: unset;
-    width: 100%;
     padding: 1rem;
   }
-
   .card h3 {
     font-size: 1rem;
+  }
+
+  /* ✅ هذا السطر الجديد */
+  .grid {
+    grid-template-columns: repeat(2, 1fr);
   }
 }
 
