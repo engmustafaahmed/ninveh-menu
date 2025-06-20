@@ -17,14 +17,12 @@
 
     body, html {
       height: 100%;
-      /* علق overflow:hidden لتجنب مشاكل العرض على الموبايل */
-      /* overflow: hidden; */
     }
 
     .hero {
       position: relative;
       height: 100vh;
-      overflow: hidden; /* نحتفظ بالـ overflow هنا للحفاظ على الفيديو */
+      overflow: hidden;
     }
 
     .hero video {
@@ -52,7 +50,7 @@
       z-index: 1;
       text-align: center;
       color: white;
-      padding-top: 30px; /* وضع الشعار في الأعلى */
+      padding-top: 30px;
     }
 
     .logo {
@@ -63,10 +61,10 @@
     }
 
     .logo-text {
-      margin-top: -10px; /* رفع النص فوق شوية */
+      margin-top: -10px;
       font-size: 3rem;
       font-weight: 700;
-      color: #f5c518;
+      color: #e6852b;
       font-family: 'Cairo', sans-serif;
       text-shadow: 2px 2px 8px rgba(0,0,0,0.7);
       letter-spacing: 1px;
@@ -106,7 +104,7 @@
       bottom: 30px;
       left: 50%;
       transform: translateX(-50%);
-      z-index: 9999; /* تأكد انه فوق كل العناصر */
+      z-index: 9999;
     }
 
     .lang-btn button {
@@ -145,10 +143,16 @@
       <a href="https://instagram.com/nineveh_palace" target="_blank" title="إنستغرام">
         <i class="fab fa-instagram"></i>
       </a>
+      <a href="https://x.com/QNineveh001?t=YdmS3LF9U1jGBBbg3FFjBQ&s=08" target="_blank" title="تويتر">
+        <i class="fab fa-x-twitter"></i>
+      </a>
+      <a href="https://www.tiktok.com/@nineveh_palace?_t=ZS-8xLBt72LNO4&_r=1" target="_blank" title="تيك توك">
+        <i class="fab fa-tiktok"></i>
+      </a>
     </div>
 
     <div class="lang-btn">
-        <button onclick="window.location.href='menu.html'">المنيو</button>
+      <button onclick="window.location.href='menu.html'">المينيو</button>
     </div>
   </div>
 </body>
