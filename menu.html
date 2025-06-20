@@ -709,6 +709,30 @@
   });
 
   // Optional: Set active card on scroll
+  
+  // تفعيل الكارت الحالي (active) وتحريكه وسط الشريط العلوي تلقائياً
+  function activateCard(card) {
+    document.querySelectorAll('.scroll-grid .card').forEach(c => c.classList.remove('active'));
+    card.classList.add('active');
+    // تحريك الكارت ليكون في منتصف الشريط العلوي
+    card.scrollIntoView({ behavior: 'smooth', inline: 'center', block: 'nearest' });
+  }
+  document.querySelectorAll('.scroll-grid .card').forEach(card => {
+    card.addEventListener('click', function() {
+      const sectionId = this.getAttribute('data-scrollto');
+      const section = document.getElementById(sectionId);
+      if (section) section.scrollIntoView({ behavior: 'smooth' });
+      activateCard(this);
+    });
+    card.addEventListener('keydown', function(e) {
+      if (e.key === 'Enter' || e.key === ' ') {
+        e.preventDefault();
+        this.click();
+      }
+    });
+  });
+
+  // عند تمرير الصفحة، يتم تفعيل الكارت المناسب وتحريكه تلقائياً في الشريط العلوي
   window.addEventListener('scroll', function() {
     const sections = Array.from(document.querySelectorAll('[id^="section-"]'));
     const scrollCards = document.querySelectorAll('.scroll-grid .card');
@@ -717,7 +741,14 @@
       const rect = sections[i].getBoundingClientRect();
       if (rect.top - 120 < window.innerHeight * 0.25) index = i;
     }
-    scrollCards.forEach((c, i) => c.classList.toggle('active', i === index));
+    scrollCards.forEach((c, i) => {
+      if(i === index) {
+        c.classList.add('active');
+        c.scrollIntoView({ behavior: 'smooth', inline: 'center', block: 'nearest' });
+      } else {
+        c.classList.remove('active');
+      }
+    });
   });
 </script>
 
